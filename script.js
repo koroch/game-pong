@@ -15,7 +15,7 @@ var game, frames;
 var dirJy;
 
 //Positions iniciais
-const posJogIniY=180, posJogIniX=180, posBolaIniY=240, posBolaIniX=475;
+const posJogIniY=180, posJogIniX=10, posBolaIniY=240, posBolaIniX=475, posCpuIniY = 180, posCpuIniX=930;
 
 //tamanhos
 var campoX=0, campoY=0, compoW=960, campoH=500;
@@ -39,8 +39,39 @@ var posCpuX, posCpuY;
 function controlaJog(){
     if(jogo){
         posJogadorY+=velJogador*dirJy;
+        if(((posJogadorY+barraH)>=campoH) || (posJogadorY<=0)) {
+            posJogadorY+=(velJogador*dirJy)*(-1);
+        }
         jogador.style.top=posJogadorY+"px";
     }
+}
+
+function controlaBola(){
+    posBolaX+=velBola*bolaX;
+    posBolaY+=velBola*bolaY;
+    console.log('cheguei');
+    //colisao com jogador
+    if(
+        (posBolaX <= posJogadorX+barraW)&&
+        ((posBolaY+bolaH >= posJogadorY)&&(posBolaY<=posJogadorY+barraH))
+    ){
+        bolaY=(((posBolaY+(bolaH/2))-(posJogadorY+(barraH/2)))/16);
+        bolaX*=-1;
+        console.log('if 1');
+    }
+
+    //colisao com cpu
+    if(
+        (posBolaX >= posCpuX-barraW)&&
+        ((posBolaY+bolaH >= posCpuY)&&(posBolaY<=posCpuY+barraH))
+    ){
+        bolaY=(((posBolaY+(bolaH/2))-(posCpuY+(barraH/2)))/16);
+        bolaX*=-1;
+        console.log('if 2');
+    }
+
+    bola.style.top=posBolaY+"px";
+    bola.style.left=posBolaX+"px";
 }
 
 function teclaDw(){
@@ -66,6 +97,7 @@ function teclaUp(){
 function game(){
     if(jogo){
         controlaJog();
+        controlaBola();
     }
     frames=requestAnimationFrame(game);
 }
@@ -75,10 +107,18 @@ function iniciaJogo(){
         cancelAnimationFrame(frames);
         jogo=true;
         dirJy=0;
+        if((Math.random()*10<5)){
+            bolaX=-1;
+        }else{
+            bolaX=1;
+        }
+        bolaY=0;
+        posJogadorX = posJogIniX;
+        posCpuX = posCpuIniX;
         posBolaX=posBolaIniX;
         posBolaY=posBolaIniY; 
-        posJogadorY=0; 
-        posCpuY=posCpuY;
+        posJogadorY=posJogIniY; 
+        posCpuY=posCpuIniY;
         game();
     }
 }
