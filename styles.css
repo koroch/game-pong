@@ -10,6 +10,9 @@ body{
 .itemPainel{
   margin: 5px;
 }
+#itemPainel{
+  margin: 100px;
+}
 #dvJogo{
   width:960px;
   height:500px;
