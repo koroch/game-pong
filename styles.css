@@ -1,4 +1,4 @@
-body{
+body {
   margin: 0px;
   background-color: #aaa;
 }
@@ -40,4 +40,65 @@ body{
 }
 .direita{
   left: 930px;
+}
+
+#start-btn {
+  position: relative;
+  display: inline-block;
+  background-color: #2d00a8;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+#start-btn:hover {
+  background-color: #1e2778;
+}
+
+#start-btn:active {
+  transform: translateY(3px);
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: confetti 1s ease-out;
+}
+
+@keyframes confetti {
+  from {
+    transform: translateY(-50px) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+#start-btn .explode {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: explode 0.5s ease-out;
+  animation-fill-mode: forwards;
+  z-index: 9999;
+}
+
+@keyframes explode {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(30);
+    opacity: 0;
+  }
 }

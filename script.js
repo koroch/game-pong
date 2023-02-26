@@ -98,6 +98,7 @@ function controlaBola(){
         posJogadorY=posJogIniY;
         posCpuY=posCpuIniY;
         pontos++;
+
         painelTxtPontos.value=pontos;
         jogo=false;
         jogador.style.top=posJogadorY+"px";
@@ -172,8 +173,33 @@ function iniciaJogo(){
 
 function inicializa(){
     velBola=velCpu=velJogador=8;
-    btIniciar=document.getElementById("btIniciar");
+    btIniciar=document.getElementById("start-btn");
     btIniciar.addEventListener("click", iniciaJogo);
+    const startButton = document.getElementById("start-btn");
+    startButton.addEventListener("click", () => {
+    // Ação a ser executada ao clicar no botão de iniciar
+    const explode = document.createElement("div");
+    explode.classList.add("explode");
+    startButton.appendChild(explode);
+    setTimeout(() => {
+        startButton.removeChild(explode);
+        for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "%";
+        confetti.style.animationDelay = Math.random() * 500 + "ms";
+        const hue = Math.floor(Math.random() * 360);
+        confetti.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        startButton.appendChild(confetti);
+        }
+        setTimeout(() => {
+        const confettis = startButton.querySelectorAll(".confetti");
+        confettis.forEach((confetti) => {
+            startButton.removeChild(confetti);
+        });
+        }, 1000);
+    }, 500);
+    });
     jogador=document.getElementById("dvJogador");
     cpu=document.getElementById("dvCpu");
     bola=document.getElementById("dvBola");
@@ -184,3 +210,7 @@ function inicializa(){
 }
 
 window.addEventListener("load",inicializa);
+
+
+document.querySelectorAll('.button').forEach(button => button.innerHTML = '<div><span>' + button.textContent.trim().split('').join('</span><span>') + '</span></div>');
+
