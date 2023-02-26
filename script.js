@@ -34,6 +34,10 @@ var posBolaX, posBolaY;
 var posJogadorX, posJogadorY;
 var posCpuX, posCpuY;
 
+const modal = document.getElementById("modal");
+const closeBtn = document.getElementsByClassName("close")[0];
+const confettiContainer = document.getElementById("confetti-container");
+
 function controlaJog(){
     if(jogo){
         posJogadorY+=velJogador*dirJy;
@@ -99,6 +103,28 @@ function controlaBola(){
         posCpuY=posCpuIniY;
         pontos++;
 
+        modal.style.display = "block";
+        const modalDiv = document.createElement("div");
+        modalDiv.classList.add("modalDiv");
+        modal.appendChild(modalDiv);
+        setTimeout(() => {
+            modal.removeChild(modalDiv);
+            for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.backgroundColor = `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`;
+            confetti.style.left = `${random(0, confettiContainer.offsetWidth)}px`;
+            confetti.style.top = `${random(0, confettiContainer.offsetHeight)}px`;
+            confettiContainer.appendChild(confetti);
+            }
+            confettiContainer.classList.remove("hide");
+            setTimeout(() => {
+            confettiContainer.classList.add("hide");
+            confettiContainer.innerHTML = "";
+            modal.style.display = "none";
+            }, 1000);
+        }, 1000);
+
         painelTxtPontos.value=pontos;
         jogo=false;
         jogador.style.top=posJogadorY+"px";
@@ -110,6 +136,29 @@ function controlaBola(){
         posJogadorY=posJogIniY;
         posCpuY=posCpuIniY;
         pontosCpu++;
+
+        modal.style.display = "block";
+        const modalDiv = document.createElement("div");
+        modalDiv.classList.add("modalDiv");
+        modal.appendChild(modalDiv);
+        setTimeout(() => {
+            modal.removeChild(modalDiv);
+            for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.backgroundColor = `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`;
+            confetti.style.left = `${random(0, confettiContainer.offsetWidth)}px`;
+            confetti.style.top = `${random(0, confettiContainer.offsetHeight)}px`;
+            confettiContainer.appendChild(confetti);
+            }
+            confettiContainer.classList.remove("hide");
+            setTimeout(() => {
+            confettiContainer.classList.add("hide");
+            confettiContainer.innerHTML = "";
+            modal.style.display = "none";
+            }, 1000);
+        }, 1000);
+
         painelTxtPontosCpu.value=pontosCpu;
         jogo=false;
         jogador.style.top=posJogadorY+"px";
@@ -119,6 +168,16 @@ function controlaBola(){
     bola.style.top=posBolaY+"px";
     bola.style.left=posBolaX+"px";
 }
+
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+    confettiContainer.classList.add("hide");
+    confettiContainer.innerHTML = "";
+};
 
 function teclaDw(){
     tecla=event.keyCode;
